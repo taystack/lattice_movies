@@ -5,6 +5,8 @@ const port = process.env.PORT || 9292;
 const applyTMDBEndpoints = require("./tmdb");
 const applyCORS = require("./cors");
 
+console.log("USING TMDB API KEY:", process.env.API_KEY);
+
 // CORS mutation
 applyCORS(app);
 // 3rd party endpoints for TMDB

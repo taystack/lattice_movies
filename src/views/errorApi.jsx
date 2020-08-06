@@ -11,11 +11,12 @@ import PopularMoviesTable from "../components/PopularMoviesTable";
 export const ErrorApi = ({
   dispatch,
 }) => {
-  useEffect(() => {
-  }, []);
-
   return (<div>
-    You need to create a `.env` file in the root of the project. No API key present.
+    You need to create a <code>.env</code> file in the root of the project. No API key present.
+    <br />
+    See <code>README.md</code>, and <code>.env.example</code> for direction on setting up your TMDB API key.
+    <br />
+    You will have to restart your backend server, and clear your browser cache.
   </div>);
 };
 
