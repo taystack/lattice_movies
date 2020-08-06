@@ -43,6 +43,7 @@ For testing the front end:
 ```bash
 yarn test
 ```
+Ideally, there would be a lot more unit tests here. I have run out of time and have neglected composing a mock provider for stubbing the redux store for connected components. Fairly simple, but verbose exercise.
 
 For testing the backend:
 ```bash
