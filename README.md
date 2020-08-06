@@ -1,68 +1,76 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# Lattice Movies
+---
+## Setup
+In order to build this project, it is assumed you have `node`, `yarn` (or `npm`) installed on your machine.
 
-In the project directory, you can run:
+Install the project dependencies:
+```bash
+yarn
+```
+Or, if you don't use `yarn`
+```bash
+npm install
+```
 
-### `yarn start`
+## Running the backend
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+In the project root, create a `.env` file and add this line:
+```bash
+# .env
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+API_KEY=<your_tmdb_api_key>
+```
 
-### `yarn test`
+See `.env.example` for an example format of how your `.env` file should look.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+yarn run backend # (OR) npm run backend
+```
 
-### `yarn build`
+## Running the client
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+In a separate terminal from the previous step:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```bash
+yarn start # (OR) npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Tests
 
-### `yarn eject`
+For testing the front end:
+```bash
+yarn test
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+For testing the backend:
+```bash
+yarn test:backend
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Now what?
+By now, the `yarn start` script should have spawned a browser addressed to `http://localhost:3000`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+If everything is running properly, you will be making data requests from port 3000 to port 9292 as CORS has been enabled on the Node/Express backend server.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Architecture Decisions
 
-### Code Splitting
+It would be pertinent at this time to address the architecture of the project. The simple way to handle dishing-out a client is to _only_ serve the client. We can clear up traffic on the data (API) this way.
+In order to do this, the data (API) server will exist on a separate server to the client. CORS will be required for this to work. Authentication will be required as well to prevent unauthorized requests. The auth layer is not implemented.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
 
-### Analyzing the Bundle Size
+Step 1 - Create a backend server for handling data (API) requests.
+  - Node.js Express framework
+  - Pure JSON responses
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+Step 2 - Enable CORS, Authenticate 3rd party requests.
+  - 'cors' npm package
+  - 'dotenv' npm package to soak-up env vars
+  -
 
-### Making a Progressive Web App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Step 3 - Enable client to be served as index.js.min through Webpack transpilation/generation. (Free from Create React App)
